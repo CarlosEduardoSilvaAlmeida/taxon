@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consulta Taxonômica</title>
+</head>
+<body>
+    <form action="/" method="get">
+        <!-- Seleção de Reino -->
+        <select id="kingdom" name="kingdom" onchange="this.form.submit()">
+            <option>Selecione um Reino</option>
+            {% for kingdom in kingdoms %}
+            <option value="{{ kingdom }}" {% if kingdom == selected_kingdom %}selected{% endif %}>{{ kingdom }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Seleção de Filo, visível apenas se um Reino foi selecionado -->
+        {% if selected_kingdom and phyla %}
+        <select id="phylum" name="phylum" onchange="this.form.submit()">
+            <option>Selecione um Filo</option>
+            {% for phylum in phyla %}
+            <option value="{{ phylum }}" {% if phylum == selected_phylum %}selected{% endif %}>{{ phylum }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        {% if selected_phylum and classes %}
+        <select id="class" name="class" onchange="this.form.submit()">
+            <option>Selecione uma Classe</option>
+            {% for class in classes %}
+            <option value="{{ class }}" {% if class == selected_class %}selected{% endif %}>{{ class }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+
+        {% if selected_class and orders %}
+        <select id="order" name="order" onchange="this.form.submit()">
+            <option>Selecione uma Ordem</option>
+            {% for order in orders %}
+            <option value="{{ order }}" {% if order == selected_order %}selected{% endif %}>{{ order }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        <!-- Seleção de Família, visível apenas se uma Classe foi selecionada -->
+        {% if selected_order and families %}
+        <select id="family" name="family" onchange="this.form.submit()">
+            <option>Selecione uma Família</option>
+            {% for family in families %}
+            <option value="{{ family }}" {% if family == selected_family %}selected{% endif %}>{{ family }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        <!-- Seleção de Gênero, visível apenas se uma Família foi selecionada -->
+        {% if selected_family and genera %}
+        <select id="genus" name="genus" onchange="this.form.submit()">
+            <option>Selecione um Gênero</option>
+            {% for genus in genera %}
+            <option value="{{ genus }}" {% if genus == selected_genus %}selected{% endif %}>{{ genus }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        <!-- Seleção de Subgênero, visível apenas se um Gênero foi selecionado -->
+        {% if selected_genus and subgenera %}
+        <select id="subgenus" name="subgenus" onchange="this.form.submit()">
+            <option>Selecione um Subgênero</option>
+            {% for subgenus in subgenera %}
+            <option value="{{ subgenus }}" {% if subgenus == selected_subgenus %}selected{% endif %}>{{ subgenus }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        {% if selected_kingdom and selected_phylum and selected_class and selected_order and selected_family and selected_genus and selected_subgenus %}
+        <!-- Exibição do resultado da consulta, visível apenas se todos os campos foram preenchidos -->
+            <h1 style="text-align: center;"> Nome científico : {{scientific_name }}</h1>
+        {% endif %}
+    </form>
+
+</body>
+</html>
